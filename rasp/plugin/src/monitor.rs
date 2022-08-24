@@ -292,7 +292,7 @@ fn internal_main(
             let mut ip = inspected_process_rw.write();
             let report = make_report(&process.clone(), "inspected", String::new());
             let mut record = hashmap_to_record(report);
-            record.data_type = report_heartbeat_data_type.clone() as i32;
+            record.data_type = 2995.clone() as i32;
             record.timestamp = time();
             let _ = inspect_reportor.send(
                 record
@@ -409,7 +409,7 @@ fn internal_main(
                     info!("operation success: {:?}", operation_message);
                     let report = make_report(&process.clone(), format!("{}_success", state.clone()).as_str(), String::new());
                     let mut record = hashmap_to_record(report);
-                    record.data_type = report_heartbeat_data_type.clone() as i32;
+                    record.data_type = 2995;
                     record.timestamp = time();
                     let _ = operation_reporter.send(
                         record
@@ -423,7 +423,7 @@ fn internal_main(
                         e.to_string(),
                     );
                     let mut record = hashmap_to_record(report);
-                    record.data_type = report_heartbeat_data_type.clone() as i32;
+                    record.data_type = 2995;
                     record.timestamp = time();
                     let _ = operation_reporter.send(
                         record

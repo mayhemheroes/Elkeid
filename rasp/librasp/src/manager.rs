@@ -123,10 +123,14 @@ impl RASPManager {
     pub fn send_message_to_probe(&mut self, pid: i32, mnt_namespace: &String, message: &String) -> AnyhowResult<()> {
         // try to write probe to dir
         let nspid = ProcessInfo::read_nspid(pid)?.ok_or(anyhow!("can not fetch nspid: {}", pid))?;
-        self.write_message_to_config_file(pid, nspid, message.clone())?;
-        debug!("send messages to probe: {} {} {}", pid, nspid, &message);
         // send through sock
         let messages: Vec<libraspserver::proto::PidMissingProbeConfig> = serde_json::from_str(message)?;
+        if messages.len() <= 0 {
+            return Err(anyhow!("empty probe_message"))
+        }
+        self.write_message_to_config_file(pid, nspid, message.clone())?;
+        debug!("send messages to probe: {} {} {}", pid, nspid, &message);
+
         for m in messages {
             let m_string = match serde_json::to_string(&m) {
                 Ok(s) => s,

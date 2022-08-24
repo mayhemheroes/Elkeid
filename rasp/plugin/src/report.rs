@@ -44,7 +44,7 @@ pub fn make_report(
     report.insert(
         "runtime",
         match &process.runtime {
-            Some(rt) => rt.to_string(),
+            Some(rt) => rt.name.to_string(),
             None => String::new(),
         },
     );
