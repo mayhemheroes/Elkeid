@@ -1,0 +1,7 @@
+project: elkeid
+target: parse-event
+
+cmds:
+  - cmd: /parse_event
+  - cmd: /parse_event_no_inst @@
+    libfuzzer: false
